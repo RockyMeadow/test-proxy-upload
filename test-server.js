@@ -3,7 +3,19 @@ const formidable = require("formidable");
 
 http
   .createServer((req, res) => {
-    if (req.url === "/upload" && req.method === "POST") {
+    const headers = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "OPTIONS, POST, GET",
+      "Access-Control-Max-Age": 2592000,
+    };
+
+    if (req.method === "OPTIONS") {
+      res.writeHead(204, headers);
+      res.end();
+      return;
+    }
+
+    if (req.url === "/upload") {
       const form = new formidable.IncomingForm();
 
       form.parse(req, (err, fields, files) => {
@@ -14,7 +26,7 @@ http
           return;
         }
 
-        res.statusCode = 200;
+        res.writeHead(200, headers);
         res.write(`${files.files.originalFilename} ${files.files.size}`);
         res.end();
       });

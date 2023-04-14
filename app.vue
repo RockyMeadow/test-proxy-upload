@@ -15,6 +15,7 @@ async function upload() {
     data.append("files", file);
   }
 
+  // switch url http://localhost:3005/upload will return a correct size
   result.value = await $fetch("/api/upload", {
     method: "POST",
     body: data,
