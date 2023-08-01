@@ -14,7 +14,7 @@ pnpm install
 NODE_OPTIONS='--no-experimental-fetch' pnpm run dev
 ```
 
-###$ Start test server
+## Start test server
 
 ```bash
 node test-server.js
