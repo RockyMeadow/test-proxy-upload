@@ -1,7 +1,8 @@
 <script setup lang="ts">
 const input = ref<HTMLInputElement>();
 const files = ref<File[]>();
-const result = ref("");
+const uploadResult = ref("");
+const directUploadResult = ref("");
 
 async function upload() {
   if (!input.value || !input.value.files) return;
@@ -15,8 +16,12 @@ async function upload() {
     data.append("files", file);
   }
 
-  // switch url http://localhost:3005/upload will return a correct size
-  result.value = await $fetch("/api/upload", {
+  uploadResult.value = await $fetch("/api/upload", {
+    method: "POST",
+    body: data,
+  });
+
+  directUploadResult.value = await $fetch("http://localhost:3005/upload", {
     method: "POST",
     body: data,
   });
@@ -27,10 +32,13 @@ async function upload() {
   <div>
     <input type="file" name="" ref="input" @change="upload()" />
 
-    <div>Result: {{ result }}</div>
+    <p>Upload result via proxy: {{ uploadResult }}</p>
 
-    <div v-for="file in files">
-      <span>{{ file.name }} {{ file.size }}</span>
-    </div>
+    <p>Direct upload result: {{ directUploadResult }}</p>
+
+    <p>Selected files:</p>
+    <ul>
+      <li v-for="file in files">{{ file.name }} {{ file.size }}</li>
+    </ul>
   </div>
 </template>
