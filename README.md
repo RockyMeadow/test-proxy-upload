@@ -1,5 +1,9 @@
 # Test upload proxy
 
+This repo is for testing nitro proxy request issue with FormData request.
+
+https://github.com/unjs/nitro/issues/1137
+
 ## Setup
 
 Make sure to install the dependencies:
